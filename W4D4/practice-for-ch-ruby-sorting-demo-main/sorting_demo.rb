@@ -84,8 +84,9 @@ class SortingDemo
     end
   end
 
-  def self.run_performance_tests(multiplier = 5, rounds = 3)
-    [1, 10, 100, 1000, 10000].each do |size|
+  def self.run_performance_tests(multiplier = 1, rounds = 3)
+    # [1, 10, 100, 1000, 10000].each do |size|
+    [100000].each do |size|
       size *= multiplier
       wait_for_keypress(
         "Press any key to benchmark sorts for #{size} elements"
