@@ -26,11 +26,7 @@ class User < ApplicationRecord
     dependent: :destroy,
     inverse_of: :author
 
-  has_many :comments,
-    foreign_key: :recipient_id,
-    class_name: :UserComment,
-    dependent: :destroy,
-    inverse_of: :recipient
+  has_many :comments, as: :commentable
 
   has_many :authored_comments, 
     foreign_key: :author_id,
