@@ -1,0 +1,5 @@
+1. in block, in block
+2. in block, out of block
+3. this will throw error because a variable of same name was already defined outside the block
+4. in block, out of block
+5. the symbol is already decleared so it will throw error
