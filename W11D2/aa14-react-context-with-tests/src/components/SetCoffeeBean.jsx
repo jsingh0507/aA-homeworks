@@ -1,9 +1,15 @@
+import { useCoffee } from '../context/CoffeeContext';
+
 const SetCoffeeBean = ({ coffeeBeans }) => {
+  const { coffeeBean, setCoffeeBeanId } = useCoffee();
+
   return (
     <div className="set-coffee-bean">
       <h2>Select a Coffee Bean</h2>
       <select
         name="coffee-bean"
+        value={coffeeBean.id}
+        onChange={(e) => setCoffeeBeanId(e.target.value)}
       >
         {coffeeBeans.map(bean => (
           <option
@@ -19,3 +25,4 @@ const SetCoffeeBean = ({ coffeeBeans }) => {
 }
 
 export default SetCoffeeBean;
+

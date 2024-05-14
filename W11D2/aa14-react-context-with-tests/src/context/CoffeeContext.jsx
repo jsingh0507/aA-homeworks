@@ -1,7 +1,8 @@
-import { createContext, useState } from 'react';
+import { createContext, useState, useContext } from 'react';
 import coffeeBeans from '../mockData/coffeeBeans.json';
 
 export const CoffeeContext = createContext();
+export const useCoffee = () => useContext(CoffeeContext);
 
 export default function CoffeeProvider(props) {
   const [coffeeBean, setCoffeeBean] = useState(coffeeBeans[0]);
