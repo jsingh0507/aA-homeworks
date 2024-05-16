@@ -7,7 +7,7 @@ class Api::PartiesController < ApplicationController
   def show
     @party = Party.find(params[:id])
 
-    render :show
-    # render :normalized_show
+    # render :show
+    render :normalized_show
   end
 end
