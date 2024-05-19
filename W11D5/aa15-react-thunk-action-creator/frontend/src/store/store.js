@@ -1,6 +1,8 @@
 import { createStore, applyMiddleware, compose, combineReducers } from 'redux';
 import fruitReducer from './fruitReducer';
 import articleReducer from './articleReducer';
+import thunk from 'redux-thunk';
+
 
 /*
 This is the most important part of this file. You will add your reducers here to
@@ -32,8 +34,12 @@ Redux DevTools will set up your Redux DevTools in the browser.
 if (import.meta.env.MODE !== "production") {
   const logger = (await import("redux-logger")).default;
   const composeEnhancers =
-    window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-  enhancer = composeEnhancers(applyMiddleware(logger));
+    typeof window === "object" && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
+      ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({ trace: true })
+      : compose;
+  enhancer = composeEnhancers(applyMiddleware(thunk, logger));
+} else {
+  enhancer = applyMiddleware(thunk);
 }
 
 /*

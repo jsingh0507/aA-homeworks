@@ -3,12 +3,33 @@ import articles from '../data/data.json';
 const LOAD_ARTICLES = 'article/loadArticles';
 const ADD_ARTICLE = 'article/addArticle';
 
+export const fetchArticles = () => async dispatch => {
+  const response = await fetch('/api/articles');
+  const articles = await response.json();
+  dispatch(loadArticles(articles));
+};
+
 export const loadArticles = () => {
   return {
     type: LOAD_ARTICLES,
     articles
   };
 };
+
+export const writeArticle = (article) => async dispatch => {
+  const response = await fetch('/api/articles', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(article)
+  });
+
+  const newArticle = await response.json();
+  dispatch(addArticle(newArticle));
+  return newArticle;
+};
+
 
 export const addArticle = (article) => {
   return {
