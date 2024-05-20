@@ -1,63 +1,45 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { nanoid } from 'nanoid';
-import { addArticle } from '../../store/articleReducer';
-import './ArticleInput.css';
+import { writeArticle } from '../../store/articleReducer';
 
 const ArticleInput = () => {
+  const dispatch = useDispatch();
   const [title, setTitle] = useState('');
   const [body, setBody] = useState('');
   const [imageUrl, setImageUrl] = useState('');
 
-  const dispatch = useDispatch();
-
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    const newArticle = {
-      id: nanoid(),
-      title,
-      body,
-      imageUrl
-    };
-
-    dispatch(addArticle(newArticle));
-    reset();
-  };
-
-  const reset = () => {
-    setTitle('');
-    setImageUrl('');
-    setBody('');
+    const article = { title, body, imageUrl };
+    const newArticle = await dispatch(writeArticle(article));
+    if (newArticle) {
+      setTitle('');
+      setBody('');
+      setImageUrl('');
+    }
   };
 
   return (
-    <div className='inputBox'>
-      <h1>Create Article</h1>
-      <form onSubmit={handleSubmit}>
-        <input
-          type='text'
-          onChange={(e) => setTitle(e.target.value)}
-          value={title}
-          placeholder='Title'
-          name='title'
-        />
-        <input
-          type='text'
-          onChange={(e) => setImageUrl(e.target.value)}
-          value={imageUrl}
-          placeholder='Image URL'
-          name='imageUrl'
-        />
-        <textarea
-          value={body}
-          onChange={(e) => setBody(e.target.value)}
-          name='body'
-          placeholder='Add your entry'
-          rows='10'
-        ></textarea>
-        <button type='submit'>Submit</button>
-      </form>
-    </div>
+    <form onSubmit={handleSubmit}>
+      <input 
+        type="text"
+        placeholder="Title"
+        value={title}
+        onChange={(e) => setTitle(e.target.value)}
+      />
+      <textarea 
+        placeholder="Body"
+        value={body}
+        onChange={(e) => setBody(e.target.value)}
+      />
+      <input 
+        type="text"
+        placeholder="Image URL"
+        value={imageUrl}
+        onChange={(e) => setImageUrl(e.target.value)}
+      />
+      <button type="submit">Submit</button>
+    </form>
   );
 };
 
